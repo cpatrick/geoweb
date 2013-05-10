@@ -303,20 +303,19 @@ geoModule.map = function(node, options) {
     if (layer !== null) {
       layer.setVisible(!layer.visible());
       return layer.visible();
-    } else {
-      // Load countries data first
-      reader = ogs.vgl.geojsonReader();
-      geoms = reader.readGJObject(ogs.geo.countries);
-      layer = ogs.geo.featureLayer({
-        "opacity": 1,
-        "showAttribution": 1,
-        "visible": 1
-      }, ogs.geo.multiGeometryFeature(geoms));
-
-      layer.setName('country-boundaries');
-      this.addLayer(layer);
-      return layer.visible();
     }
+    // Load countries data first
+    reader = ogs.vgl.geojsonReader();
+    geoms = reader.readGJObject(ogs.geo.countries);
+    layer = ogs.geo.featureLayer({
+      "opacity": 1,
+      "showAttribution": 1,
+      "visible": 1
+    }, ogs.geo.multiGeometryFeature(geoms));
+
+    layer.setName('country-boundaries');
+    this.addLayer(layer);
+    return layer.visible();
   };
 
   /**
