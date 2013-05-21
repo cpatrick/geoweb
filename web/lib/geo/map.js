@@ -303,19 +303,21 @@ geoModule.map = function(node, options) {
     if (layer !== null) {
       layer.setVisible(!layer.visible());
       return layer.visible();
-    }
-    // Load countries data first
-    reader = ogs.vgl.geojsonReader();
-    geoms = reader.readGJObject(ogs.geo.countries);
-    layer = ogs.geo.featureLayer({
-      "opacity": 1,
-      "showAttribution": 1,
-      "visible": 1
-    }, ogs.geo.multiGeometryFeature(geoms));
+    } else {
+      // Load countries data first
+      reader = ogs.vgl.geojsonReader();
+      geoms = reader.readGJObject(ogs.geo.countries);
+      // @todo if opacity is on layer, solid color should be too
+      layer = ogs.geo.featureLayer({
+        "opacity": 1,
+        "showAttribution": 1,
+        "visible": 1
+      }, ogs.geo.multiGeometryFeature(geoms, [1.0,0.5,0.0]));
 
-    layer.setName('country-boundaries');
-    this.addLayer(layer);
-    return layer.visible();
+      layer.setName('country-boundaries');
+      this.addLayer(layer);
+      return layer.visible();
+    }
   };
 
   /**
