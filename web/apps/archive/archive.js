@@ -67,7 +67,30 @@ archive.main = function() {
   });
 
   init();
+  archive.initWebSockets();
 };
+
+archive.initWebSockets = function() {
+  var ws = srvModule.webSocket({nodes: ['streammaster','streamworker']}),
+    streaming = false;
+
+  ws.bind('streammaster', function(message) {
+    if(message == 'done') {
+      streaming = false;
+      //$('#button').html(startText);
+    } else {
+      var img = new Image();
+      img.onload = function() {
+        ctx.drawImage(img, parseInt(message.x), parseInt(message.y)-img.height);
+      };
+      img.src = "data:image/png;base64," + message.img;
+      recieveCount += 1;
+    }
+  });
+
+
+
+}
 
 
 archive.processCSVData = function(csvdata) {
