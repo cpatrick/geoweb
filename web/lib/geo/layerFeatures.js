@@ -1,7 +1,25 @@
-geoModule.layerDrawables = function() {
+//////////////////////////////////////////////////////////////////////////////
+/**
+ * @module ogs.geo
+ */
+//////////////////////////////////////////////////////////////////////////////
+
+/*jslint devel: true, forin: true, newcap: true, plusplus: true,
+   white: true, indent: 2*/
+/*global geoModule, ogs, inherit, $*/
+
+//////////////////////////////////////////////////////////////////////////////
+/**
+ * Create a new instance of class layerFeatures
+ *
+ * @class
+ * @returns {geoModule.layerFeatures}
+ */
+//////////////////////////////////////////////////////////////////////////////
+geoModule.layerFeatures = function() {
   "use strict";
-  if (!(this instanceof geoModule.layerDrawables)) {
-    return new geoModule.layerDrawables();
+  if (!(this instanceof geoModule.layerFeatures)) {
+    return new geoModule.layerFeatures();
   }
   ogs.vgl.object.call(this);
 
@@ -62,4 +80,4 @@ geoModule.layerDrawables = function() {
   };
 };
 
-inherit(geoModule.layerDrawables, ogs.vgl.object);
+inherit(geoModule.layerFeatures, ogs.vgl.object);
