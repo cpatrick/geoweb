@@ -120,12 +120,17 @@ archive.processResults = function(results, removeFilter) {
 
   selectTimestep = selectTimestep.selectAll('select').data(function(row) {
 
-    var timestep  = ['N/A'];
+    var timestep;
 
-    if (row && 'temporalrange' in row)
-      timestep = row['temporalrange'];
+    if (row && 'timeInfo' in row)
+      var tinfo = row['timeInfo']
+      if (tinfo && 'rawTimes' in tinfo)
+        timestep = tinfo['rawTimes'];
 
-    return timestep;
+    if (timestep)
+      return timestep;
+
+    return ['N/A','N/A'];
   });
 
   selectTimestep.enter().append('option').text(function(timestep) {
@@ -212,7 +217,7 @@ archive.query = function(query) {
     data: {
       query: JSON.stringify(mongoQuery),
       limit:100,
-      fields: JSON.stringify(['name', 'basename', 'temporalrange', 'variables'])
+      fields: JSON.stringify(['name', 'basename', 'timeInfo', 'variables'])
     },
     dataType: 'json',
     success: function(response) {
