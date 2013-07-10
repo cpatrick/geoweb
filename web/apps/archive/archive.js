@@ -209,8 +209,8 @@ archive.query = function(query) {
       nameOr[index] = {name: {$regex: '.*' + value +'.*', $options: 'i'}};
   });
 
-  mongoQuery = {$or: [{ $or: nameOr},{variables: {$elemMatch: { $or: variableOr}}}] }
-
+  mongoQuery = {$and: [{$or: [{ $or: nameOr},{variables: {$elemMatch: { $or: variableOr}}}] },
+               {variables: {$not: {$size: 0}}}]}
   $.ajax({
     type: 'POST',
     url: '/mongo/' + mongo.server + '/' + mongo.database + '/' + mongo.collection,
