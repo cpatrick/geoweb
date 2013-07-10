@@ -264,14 +264,20 @@ archive.main = function() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       updateAndDraw(canvas.width, canvas.height);
+
+      var layer = archive.myMap.activeLayer();
+      if(layer && layer.hasOwnProperty('workflow')) {
+        layer.workflow.resize();
+      }
     }
     resizeCanvas();
 
     function updateAndDraw(width, height) {
-     archive.myMap.redraw();
-     archive.myMap.resize(width, height);
-     archive.myMap.update();
-     archive.myMap.redraw();
+
+      archive.myMap.redraw();
+      archive.myMap.resize(width, height);
+      archive.myMap.update();
+      archive.myMap.redraw();
     }
 
     // Create a placeholder for the layers
@@ -293,6 +299,7 @@ archive.main = function() {
 
   init();
   archive.initWebSockets();
+  initWorkflowCanvas();
 };
 
 archive.initWebSockets = function() {
@@ -391,15 +398,17 @@ archive.workflowLayer = function(target, layerId) {
         draggable: true,
         resizable: true,
         minHeight: 300,
-        width: Math.floor(window.screen.width * 0.8),
-        height: Math.floor(window.screen.height * 0.8),
+        width: Math.floor(window.screen.width * 0.95),
+        height: Math.floor(window.screen.height * 0.95),
         buttons: {
           "Close": function() {
             $(this).dialog("close");
+            layer.setVisible(false);
           }
         }
       });
-    resizeWorkflow();
+    activeWorkflow = layer.workflow;
+    layer.workflow.show();
   }
 }
 
@@ -417,7 +426,10 @@ archive.addLayer = function(target) {
     var layer = ogs.geo.featureLayer();
     layer.setName(target.name);
     layer.setDataSource(source);
+
     layer.update(ogs.geo.updateRequest(timeval));
+    layer.workflow = ogs.ui.workflow({data:exworkflow});
+
     archive.myMap.addLayer(layer);
     archive.myMap.redraw();
     ogs.ui.gis.layerAdded(target);

@@ -1,4 +1,4 @@
-var style = {
+var baseStyle = {
   fill: 'darkgray',
   module: {
     text: {
@@ -23,6 +23,18 @@ var style = {
   },
   conn: {
     stroke: 'black',
-    lineWidth: 2
+    lineWidth: 2,
+    bezierOffset: 75
   }
 };
+
+var vistrailStyle = jQuery.extend(true, {}, baseStyle);
+
+var climatePipesStyle = jQuery.extend(true, {}, baseStyle);
+
+climatePipesStyle.fill = 'teal';
+climatePipesStyle.module.port.inputHeight = 30;
+climatePipesStyle.module.port.inputWidth = 200;
+climatePipesStyle.module.port.inputYPad = 5;
+climatePipesStyle.module.port.inpad = 10;
+climatePipesStyle.module.port.outpad = 10;
