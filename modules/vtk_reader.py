@@ -40,10 +40,6 @@ def read(expr, vars, rqstTime):
     if converters:
       stdTime = converters[0](float(rqstTime))
       date = converters[1](stdTime)
-      cherrypy.log("time = " + str(rqstTime) +
-                   " tunits: " + tunits +
-                   " stdTime: " + str(stdTime) +
-                   " date: " + str(date))
 
   # enable only chosen array(s)
   narrays = reader.GetNumberOfVariableArrays()

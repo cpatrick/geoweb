@@ -20,6 +20,7 @@ class mongo_import:
 
     # Add files to the database
     for filename in files:
+      print 'Working on %s' % filename
       variables = []
       basename = os.path.basename(filename)
       filenamesplitted = os.path.splitext(basename)
@@ -66,7 +67,7 @@ class mongo_import:
             variable["name"] = pdarray.GetName()
             variable["dim"] = []
             variable["tags"] = []
-            variable["units"] = reader.GetArrayUnits(pdarray.GetName())
+            variable["units"] = reader.QueryArrayUnits(pdarray.GetName())
             # todo: iterate over all timesteps, default (first) timestep may not be representative
             variable["time"] = []
             componentCount = pdarray.GetNumberOfComponents()

@@ -122,10 +122,8 @@ archive.processResults = function(results, removeFilter) {
 
     var timestep;
 
-    if (row && 'timeInfo' in row)
-      var tinfo = row['timeInfo']
-      if (tinfo && 'rawTimes' in tinfo)
-        timestep = tinfo['rawTimes'];
+    if (row && 'timeInfo' in row && row['timeInfo'].rawTimes)
+      timestep = row['timeInfo'].rawTimes;
 
     if (timestep)
       return timestep;
